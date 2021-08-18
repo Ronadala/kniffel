@@ -12,4 +12,11 @@ export class StartMenuComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  clickedSinglePlayer() {
+
+  }
+
+  clickedMultiPlayer() {
+
+  }
 }
