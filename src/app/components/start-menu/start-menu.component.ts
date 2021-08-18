@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {TabManagerService} from "../../services/tab-manager.service";
 
 @Component({
   selector: 'app-start-menu',
@@ -7,16 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StartMenuComponent implements OnInit {
 
-  constructor() { }
+  constructor(protected tabService: TabManagerService) {
+  }
 
   ngOnInit(): void {
   }
 
   clickedSinglePlayer() {
-
+    this.tabService.updateTab(GameTab.SINGLE_PLAYER);
   }
 
   clickedMultiPlayer() {
-
+    this.tabService.updateTab(GameTab.MULTI_PLAYER);
   }
 }
