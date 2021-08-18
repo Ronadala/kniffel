@@ -1,5 +1,5 @@
 <div class="main-container">
-  <div [ngSwitch]="tab">
+  <div [ngSwitch]="tab" class="tab-container">
     <div *ngSwitchCase="START_MENU">
       <app-start-menu></app-start-menu>
     </div>
@@ -13,3 +13,4 @@
     </div>
   </div>
 </div>
+<button (click)="backToMenu()">back to menu</button>

@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {TabManagerService} from "../../services/tab-manager.service";
+import {GameTab} from "../../enums/gameTab";
 
 @Component({
   selector: 'app-start-menu',

@@ -17,7 +17,7 @@ export class TabManagerService {
     return this.selectedTab;
   }
 
-  public getObservable(): Subject<GameTab> {
+  public getSubject(): Subject<GameTab> {
     return this.tabUpdater;
   }
 

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {GameTab} from "../../enums/gameTab";
+import {TabManagerService} from "../../services/tab-manager.service";
 
 @Component({
   selector: 'app-kniffel',
@@ -14,9 +15,17 @@ export class KniffelComponent implements OnInit {
   readonly RESULT = GameTab.RESULT;
   tab: GameTab = GameTab.START_MENU;
 
-  constructor() { }
+  constructor(protected tabService: TabManagerService) {
+  }
 
   ngOnInit(): void {
+    this.tabService.getSubject().subscribe((newTab: GameTab) => {
+      this.tab = newTab;
+    });
+  }
+
+  backToMenu(): void {
+    this.tabService.updateTab(GameTab.START_MENU);
   }
 
 }
