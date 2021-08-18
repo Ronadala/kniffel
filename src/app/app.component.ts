@@ -7,5 +7,5 @@ import {Component} from '@angular/core';
 })
 export class AppComponent {
   title = 'Kniffel';
-  tab: GameTab = GameTab.START_MENU;
+
 }
