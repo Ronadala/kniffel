@@ -19,6 +19,7 @@ export class KniffelComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.tab = this.tabService.getSelectedTab();
     this.tabService.getSubject().subscribe((newTab: GameTab) => {
       this.tab = newTab;
     });
