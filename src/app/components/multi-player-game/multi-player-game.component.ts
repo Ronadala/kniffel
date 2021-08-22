@@ -38,8 +38,8 @@ export class MultiPlayerGameComponent implements OnInit {
       this.categories.THREE_OF_A_KIND,
       this.categories.FOUR_OF_A_KIND,
       this.categories.FULL_HOUSE,
-      this.categories.SMALL_STRAIGHT,
-      this.categories.LARGE_STRAIGHT,
+      this.categories.SMALL_STREET,
+      this.categories.LARGE_STREET,
       this.categories.KNIFFEL,
       this.categories.CHANCE,
     ]

@@ -8,8 +8,8 @@ export enum KniffelCategories {
   THREE_OF_A_KIND = "Dreierpasch",
   FOUR_OF_A_KIND = "Viererpasch",
   FULL_HOUSE = "Full House",
-  SMALL_STRAIGHT = "Kleine Straße",
-  LARGE_STRAIGHT = "Große Straße",
+  SMALL_STREET = "Kleine Straße",
+  LARGE_STREET = "Große Straße",
   KNIFFEL = "Kniffel",
   CHANCE = "Chance",
 }

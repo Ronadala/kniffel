@@ -27,6 +27,20 @@ export class CategoryService {
         return CategoryService.calculateSingleDigits(5, dices);
       case KniffelCategories.SIXES:
         return CategoryService.calculateSingleDigits(6, dices);
+      case KniffelCategories.THREE_OF_A_KIND:
+        return CategoryService.calculateThreeOfAKind(dices);
+      case KniffelCategories.FOUR_OF_A_KIND:
+        return CategoryService.calculateFourOfAKind(dices);
+      case KniffelCategories.FULL_HOUSE:
+        return CategoryService.calculateFullHouse(dices);
+      case KniffelCategories.SMALL_STREET:
+        return CategoryService.calculateSmallStreet(dices);
+      case KniffelCategories.LARGE_STREET:
+        return CategoryService.calculateLargeStreet(dices);
+      case KniffelCategories.KNIFFEL:
+        return CategoryService.calculateKniffel(dices);
+      case KniffelCategories.CHANCE:
+        return CategoryService.calculateChance(dices);
 
     }
   }
@@ -53,30 +67,40 @@ export class CategoryService {
     let twoOfAKind: boolean = false;
     let threeOfAKind: boolean = false;
 
-
-    let numberOfDices: number;
-
     for (let i = 1; i <= 6; i++) {
       let numberOfDices = this.countArrayForNumber(i, dices);
-      if (numberOfDices >= 2) {
-
+      if (!threeOfAKind && numberOfDices === 3) {
+        threeOfAKind = true;
+      } else if (!twoOfAKind && numberOfDices === 2) {
+        twoOfAKind = true;
       }
     }
 
-    return twoOfAKind && threeOfAKind ? 25 : 0;
+    return twoOfAKind && threeOfAKind ? categoryPoints.FULL_HOUSE : 0;
   }
 
   private static calculateSmallStreet(dices: number[]): number {
-
-    return 0;
+    if (this.containsDices(dices, 3, 4)) {
+      if (this.containsDices(dices, 1, 2)
+        || this.containsDices(dices, 2, 5)
+        || this.containsDices(dices, 5, 6)) {
+        return categoryPoints.SMALL_STREET;
+      }
+    }
+    return categoryPoints.NULL;
   }
 
   private static calculateLargeStreet(dices: number[]): number {
-    return 0;
+    if (this.containsDices(dices, 2, 3, 4, 5)) {
+      if (dices.includes(1) || dices.includes(6)) {
+        return categoryPoints.LARGE_STREET;
+      }
+    }
+    return categoryPoints.NULL;
   }
 
   private static calculateKniffel(dices: number[]): number {
-    return this.hasXOfAKind(5, dices) ? categoryPoints.KNIFFEL: categoryPoints.NULL;
+    return this.hasXOfAKind(5, dices) ? categoryPoints.KNIFFEL : categoryPoints.NULL;
   }
 
   private static calculateChance(dices: number[]): number {
@@ -104,16 +128,6 @@ export class CategoryService {
     return false;
   }
 
-  private static hasExactlyXOfAKind(x: number, dices: number[]): boolean {
-    for (let i = 1; i <= 6; i++) {
-      let numberOfDices = this.countArrayForNumber(i, dices);
-      if (numberOfDices === x) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   private static countArrayForNumber(searchedForDice: number, dices: number[]) {
     return dices.reduce((counter, dice) => {
       if (dice === searchedForDice) counter += 1
@@ -121,10 +135,18 @@ export class CategoryService {
     }, 0);
   }
 
-  private static sumAllEyes(dices: number[])
-  {
+  private static sumAllEyes(dices: number[]) {
     let sum: number = 0;
     dices.forEach(dice => sum += dice);
     return sum;
+  }
+
+  private static containsDices(dices: number[], ...args: number[]): boolean {
+    for (let arg of args) {
+      if (!dices.includes(arg)) {
+        return false;
+      }
+    }
+    return true;
   }
 }
