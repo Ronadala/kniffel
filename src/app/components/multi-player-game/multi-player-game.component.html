@@ -3,16 +3,33 @@
     <th>Spiel</th>
     <th *ngFor="let player of players">{{player.name}}</th>
   </tr>
+  <!-- UpperBlock -->
   <tr *ngFor="let category of upperBlock">
     <td>{{category}}</td>
     <td *ngFor="let player of players">
       <span *ngIf="player.getCategoryValue(category) != null">{{player.getCategoryValue(category)}}</span>
-      <span *ngIf="player.activeTurn && player.getCategoryValue(category) == null" (click)="selectCategory(player, category)">{{calculateValue(category)}}</span>
+      <span *ngIf="player.activeTurn && player.getCategoryValue(category) == null"
+            (click)="selectCategory(player, category)">{{calculateValue(category)}}</span>
+    </td>
+  </tr>
+  <!-- UpperBlock points -->
+  <tr *ngFor="let category of upperBlockPoints">
+    <td>{{category}}</td>
+    <td *ngFor="let player of players">
+      <span>{{player.getCategoryPoints(category)}}</span>
     </td>
   </tr>
 
+  <!-- LowerBlock -->
   <tr *ngFor="let category of lowerBlock">
     <td>{{category}}</td>
     <td *ngFor="let player of players">{{player.getCategoryValue(category)}}</td>
+  </tr>
+  <!-- Total points -->
+  <tr *ngFor="let category of lowerBlockPoints">
+    <td>{{category}}</td>
+    <td *ngFor="let player of players">
+      <span>{{player.getCategoryPoints(category)}}</span>
+    </td>
   </tr>
 </table>
