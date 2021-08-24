@@ -3,6 +3,8 @@ import {Player} from "../../classes/Player";
 import {KniffelCategories} from "../../enums/kniffelCategories";
 import {CategoryService} from "../../services/CategoryService";
 import {PointCategories} from "../../enums/PointCategories";
+import {Dice} from "../../classes/Dice";
+import {DiceService} from "../../services/DiceService";
 
 @Component({
   selector: 'app-multi-player-game',
@@ -13,21 +15,24 @@ export class MultiPlayerGameComponent implements OnInit {
 
   readonly categories = KniffelCategories;
   readonly pointCategories = PointCategories;
+  readonly maxDiceCount: number = 5;
 
   players: Player[] = [];
   upperBlock: KniffelCategories[] | undefined;
   lowerBlock: KniffelCategories[] | undefined;
   upperBlockPoints: PointCategories[] | undefined;
   lowerBlockPoints: PointCategories[] | undefined;
-  dices: number[] = [];
+  dices: Dice[] = [];
 
-  constructor(protected categoryService: CategoryService) {
+  constructor(protected categoryService: CategoryService,
+              protected diceService: DiceService) {
   }
 
   ngOnInit(): void {
     this.players.push(new Player('steve'));
 
     this.createBlocks();
+    this.createDices();
   }
 
   private createBlocks() {
@@ -64,11 +69,43 @@ export class MultiPlayerGameComponent implements OnInit {
 
   }
 
+  private createDices() {
+    for (let i = 1; i <= this.maxDiceCount; i++) {
+      this.dices.push(new Dice());
+    }
+    this.resetDice();
+  }
+
+  rollDice() {
+    this.diceService.shuffleDice(this.dices);
+  }
+
+  private resetDice() {
+    this.diceService.resetAndShuffleDice(this.dices);
+  }
+
   selectCategory(player: Player, category: KniffelCategories) {
     // todo select category and assign value
   }
 
   calculateValue(category: KniffelCategories): number {
-    return this.categoryService.getCalculatedValue(category, this.dices);
+    return this.categoryService.getCalculatedValue(category, this.getDices());
+  }
+
+  private getDices(): number[] {
+    return this.dices.map(dice => {
+      return !!dice.value ? dice.value : 0
+    });
+  }
+
+  getDiceImg(dice: number | undefined) {
+    if (!dice) {
+      console.error('the dice couldn\'t be found');
+    }
+    return '/assets/dices/dice_' + dice + '.gif';
+  }
+
+  toggleHoldDice(dice: Dice) {
+    dice.holdBack = !dice.holdBack;
   }
 }
