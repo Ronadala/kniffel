@@ -56,7 +56,7 @@ export class CategoryService {
   }
 
   private static calculateThreeOfAKind(dices: number[]): number {
-    return this.calculateXOfAKind(4, dices);
+    return this.calculateXOfAKind(3, dices);
   }
 
   private static calculateFourOfAKind(dices: number[]): number {
