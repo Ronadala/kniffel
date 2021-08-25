@@ -17,6 +17,11 @@ export class MultiPlayerGameComponent implements OnInit {
   readonly pointCategories = PointCategories;
   readonly maxDiceCount: number = 5;
 
+  public possibleRerolls!: number;
+  maxRerolls: number = 3;
+  playerTurn!: number;
+  playerCount!: number;
+
   players: Player[] = [];
   upperBlock: KniffelCategories[] | undefined;
   lowerBlock: KniffelCategories[] | undefined;
@@ -25,16 +30,24 @@ export class MultiPlayerGameComponent implements OnInit {
   dices: Dice[] = [];
 
   constructor(protected categoryService: CategoryService,
-              protected diceService: DiceService) {
+              protected diceService: DiceService,) {
   }
 
   ngOnInit(): void {
-    // todo remove
-    this.players.push(new Player('steve'));
-    this.players[0].activeTurn= true;
+    this.loadConfig();
 
     this.createBlocks();
     this.createDices();
+
+    this.initGame();
+  }
+
+  private loadConfig() {
+
+    //todo do real config from menu
+    this.players.push(new Player('steve', 1));
+    this.players.push(new Player('steven', 2));
+
   }
 
   private createBlocks() {
@@ -75,23 +88,60 @@ export class MultiPlayerGameComponent implements OnInit {
     for (let i = 1; i <= this.maxDiceCount; i++) {
       this.dices.push(new Dice());
     }
+  }
+
+  private initGame() {
+    this.playerCount = this.players.length;
+    this.playerTurn = 1;
+
+    // first turn
+    this.getPlayer(this.playerTurn)!.activeTurn = true;
     this.resetDice();
   }
 
+  nextTurn() {
+    this.getPlayer(this.playerTurn).activeTurn = false;
+
+    if (this.playerTurn! >= this.playerCount!) {
+      // back to player 1
+      this.playerTurn = 1;
+    } else {
+      this.playerTurn++;
+    }
+
+    this.resetDice();
+
+    this.getPlayer(this.playerTurn).activeTurn = true;
+  }
+
   rollDice() {
-    this.diceService.shuffleDice(this.dices);
+    if (this.possibleRerolls > 0) {
+      this.diceService.shuffleDice(this.dices);
+      this.possibleRerolls--;
+    }
   }
 
   private resetDice() {
     this.diceService.resetAndShuffleDice(this.dices);
+    this.possibleRerolls = this.maxRerolls;
   }
 
   selectCategory(player: Player, category: KniffelCategories) {
     player.setCategoryValue(category, this.calculateValue(category));
+
+    this.nextTurn();
   }
 
   calculateValue(category: KniffelCategories): number {
     return this.categoryService.getCalculatedValue(category, this.getDices());
+  }
+
+
+  getPlayer(index: number): Player {
+    const player: Player = <Player>this.players.find(value => {
+      return value.playerNumber == index;
+    });
+    return player;
   }
 
   private getDices(): number[] {

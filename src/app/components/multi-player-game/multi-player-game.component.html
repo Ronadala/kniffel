@@ -58,6 +58,6 @@
            [ngClass]="dice.holdBack ? 'hold-dice':'dice'"
            (click)="toggleHoldDice(dice)"/>
     </div>
-    <button (click)="rollDice()">würfeln</button>
+    <button (click)="rollDice()">{{'würfeln (' + possibleRerolls + ')'}}</button>
   </div>
 </div>

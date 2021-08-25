@@ -8,9 +8,11 @@ export class Player {
   private values: Map<KniffelCategories, number | null> = new Map<KniffelCategories, number | null>();
   private points: Map<PointCategories, number | null> = new Map<PointCategories, number | null>();
   public activeTurn: boolean = false;
+  public playerNumber: number = 0;
 
-  constructor(name: string) {
+  constructor(name: string, playerNumber: number) {
     this.name = name;
+    this.playerNumber = playerNumber;
 
     this.initializeValues();
     this.initializePoints();
