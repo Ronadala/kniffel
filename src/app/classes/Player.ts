@@ -1,6 +1,6 @@
 import {KniffelCategories} from "../enums/kniffelCategories";
-import { PointCategories } from "../enums/PointCategories";
-import {GeneralHelperService} from "../services/generalHelperService";
+import {PointCategories} from "../enums/PointCategories";
+import {GeneralHelperService} from "../services/general-helper.service";
 
 export class Player {
 
@@ -40,4 +40,7 @@ export class Player {
     }
   }
 
+  setCategoryValue(category: KniffelCategories, value: number) {
+    this.values.set(category, value);
+  }
 }
