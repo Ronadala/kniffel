@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Player} from "../../classes/Player";
 import {KniffelCategories} from "../../enums/kniffelCategories";
-import {CategoryService} from "../../services/CategoryService";
+import {CategoryService} from "../../services/Category.service";
 import {PointCategories} from "../../enums/PointCategories";
 import {Dice} from "../../classes/Dice";
-import {DiceService} from "../../services/DiceService";
+import {DiceService} from "../../services/Dice.service";
 
 @Component({
   selector: 'app-multi-player-game',
@@ -29,7 +29,9 @@ export class MultiPlayerGameComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // todo remove
     this.players.push(new Player('steve'));
+    this.players[0].activeTurn= true;
 
     this.createBlocks();
     this.createDices();
@@ -85,7 +87,7 @@ export class MultiPlayerGameComponent implements OnInit {
   }
 
   selectCategory(player: Player, category: KniffelCategories) {
-    // todo select category and assign value
+    player.setCategoryValue(category, this.calculateValue(category));
   }
 
   calculateValue(category: KniffelCategories): number {

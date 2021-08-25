@@ -9,9 +9,15 @@
       <tr *ngFor="let category of upperBlock">
         <td>{{category}}</td>
         <td *ngFor="let player of players">
-          <span *ngIf="player.getCategoryValue(category) != null">{{player.getCategoryValue(category)}}</span>
+          <span *ngIf="player.getCategoryValue(category) != null"
+                class="selected-Value">
+            {{player.getCategoryValue(category)}}
+          </span>
           <span *ngIf="player.activeTurn && player.getCategoryValue(category) == null"
-                (click)="selectCategory(player, category)">{{calculateValue(category)}}</span>
+                (click)="selectCategory(player, category)"
+                class="selectable-Value">
+            {{calculateValue(category)}}
+          </span>
         </td>
       </tr>
       <!-- UpperBlock points -->
@@ -25,7 +31,17 @@
       <!-- LowerBlock -->
       <tr *ngFor="let category of lowerBlock">
         <td>{{category}}</td>
-        <td *ngFor="let player of players">{{player.getCategoryValue(category)}}</td>
+        <td *ngFor="let player of players">
+          <span *ngIf="player.getCategoryValue(category) != null"
+                class="selected-Value">
+            {{player.getCategoryValue(category)}}
+          </span>
+          <span *ngIf="player.activeTurn && player.getCategoryValue(category) == null"
+                (click)="selectCategory(player, category)"
+                class="selectable-Value">
+            {{calculateValue(category)}}
+          </span>
+        </td>
       </tr>
       <!-- Total points -->
       <tr *ngFor="let category of lowerBlockPoints">
@@ -42,6 +58,6 @@
            [ngClass]="dice.holdBack ? 'hold-dice':'dice'"
            (click)="toggleHoldDice(dice)"/>
     </div>
-    <button (click)="rollDice()">shuffle</button>
+    <button (click)="rollDice()">würfeln</button>
   </div>
 </div>
