@@ -4,16 +4,17 @@ import {GeneralHelperService} from "../services/general-helper.service";
 
 export class Player {
 
-  public readonly name: string;
+  public name: string = '';
   private values: Map<KniffelCategories, number | null> = new Map<KniffelCategories, number | null>();
   private points: Map<PointCategories, number | null> = new Map<PointCategories, number | null>();
   public activeTurn: boolean = false;
   public playerNumber: number = 0;
 
-  constructor(name: string, playerNumber: number) {
-    this.name = name;
-    this.playerNumber = playerNumber;
+  constructor() {
+    this.initialize();
+  }
 
+  private initialize() {
     this.initializeValues();
     this.initializePoints();
   }

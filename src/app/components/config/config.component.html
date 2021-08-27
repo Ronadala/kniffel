@@ -1,0 +1,24 @@
+<div class="main-container">
+  <div *ngFor="let player of playerList" class="player-container">
+    <input class="player-name-input"
+           type="text"
+           [(ngModel)]="player.name"
+           placeholder="Spieler name">
+    <button (click)="clickedRemovePlayer(player)"
+            [disabled]="playerList.length <= 1">
+      Entfernen
+    </button>
+  </div>
+  <div class="button-container">
+    <button *ngIf="isPlayerAddAllowed()"
+            [disabled]="playerList.length >= 8"
+            (click)="clickedAddPlayer()">
+      Spieler hinzufügen
+    </button>
+
+    <button [disabled]="playerList.length < 1"
+            (click)="clickedStartGame()">
+      Spiel starten
+    </button>
+  </div>
+</div>

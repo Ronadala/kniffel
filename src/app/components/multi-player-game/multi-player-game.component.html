@@ -3,12 +3,12 @@
     <table>
       <tr>
         <th>Kategorien</th>
-        <th *ngFor="let player of players">{{player.name}}</th>
+        <th *ngFor="let player of playerList">{{player.name}}</th>
       </tr>
       <!-- UpperBlock -->
       <tr *ngFor="let category of upperBlock">
         <td>{{category}}</td>
-        <td *ngFor="let player of players">
+        <td *ngFor="let player of playerList">
           <span *ngIf="player.getCategoryValue(category) != null"
                 class="selected-Value">
             {{player.getCategoryValue(category)}}
@@ -23,7 +23,7 @@
       <!-- UpperBlock points -->
       <tr *ngFor="let category of upperBlockPoints">
         <td>{{category}}</td>
-        <td *ngFor="let player of players">
+        <td *ngFor="let player of playerList">
           <span>{{player.getCategoryPoints(category)}}</span>
         </td>
       </tr>
@@ -31,7 +31,7 @@
       <!-- LowerBlock -->
       <tr *ngFor="let category of lowerBlock">
         <td>{{category}}</td>
-        <td *ngFor="let player of players">
+        <td *ngFor="let player of playerList">
           <span *ngIf="player.getCategoryValue(category) != null"
                 class="selected-Value">
             {{player.getCategoryValue(category)}}
@@ -46,7 +46,7 @@
       <!-- Total points -->
       <tr *ngFor="let category of lowerBlockPoints">
         <td>{{category}}</td>
-        <td *ngFor="let player of players">
+        <td *ngFor="let player of playerList">
           <span>{{player.getCategoryPoints(category)}}</span>
         </td>
       </tr>

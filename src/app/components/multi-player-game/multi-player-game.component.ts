@@ -5,6 +5,7 @@ import {CategoryService} from "../../services/category.service";
 import {PointCategories} from "../../enums/PointCategories";
 import {Dice} from "../../classes/Dice";
 import {DiceService} from "../../services/dice.service";
+import {ConfigurationService} from "../../services/configuration.service";
 
 @Component({
   selector: 'app-multi-player-game',
@@ -22,7 +23,7 @@ export class MultiPlayerGameComponent implements OnInit {
   playerTurn!: number;
   playerCount!: number;
 
-  players: Player[] = [];
+  playerList: Player[] = [];
   upperBlock: KniffelCategories[] | undefined;
   lowerBlock: KniffelCategories[] | undefined;
   upperBlockPoints: PointCategories[] | undefined;
@@ -30,7 +31,8 @@ export class MultiPlayerGameComponent implements OnInit {
   dices: Dice[] = [];
 
   constructor(protected categoryService: CategoryService,
-              protected diceService: DiceService,) {
+              protected diceService: DiceService,
+              protected configService: ConfigurationService,) {
   }
 
   ngOnInit(): void {
@@ -43,11 +45,7 @@ export class MultiPlayerGameComponent implements OnInit {
   }
 
   private loadConfig() {
-
-    //todo do real config from menu
-    this.players.push(new Player('steve', 1));
-    this.players.push(new Player('steven', 2));
-
+    this.playerList = this.configService.getPlayerList();
   }
 
   private createBlocks() {
@@ -91,7 +89,7 @@ export class MultiPlayerGameComponent implements OnInit {
   }
 
   private initGame() {
-    this.playerCount = this.players.length;
+    this.playerCount = this.playerList.length;
     this.playerTurn = 1;
 
     // first turn
@@ -138,7 +136,7 @@ export class MultiPlayerGameComponent implements OnInit {
 
 
   getPlayer(index: number): Player {
-    const player: Player = <Player>this.players.find(value => {
+    const player: Player = <Player>this.playerList.find(value => {
       return value.playerNumber == index;
     });
     return player;

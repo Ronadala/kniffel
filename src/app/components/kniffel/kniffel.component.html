@@ -3,10 +3,13 @@
     <div *ngSwitchCase="START_MENU">
       <app-start-menu></app-start-menu>
     </div>
-    <div *ngSwitchCase="SINGLE_PLAYER">
-      <app-single-player-game></app-single-player-game>
+    <div *ngSwitchCase="SINGLE_PLAYER_CONFIG">
+      <app-config [gameMode]="SINGLE_PLAYER"></app-config>
     </div>
-    <div *ngSwitchCase="MULTI_PLAYER">
+    <div *ngSwitchCase="MULTI_PLAYER_CONFIG">
+      <app-config [gameMode]="MULTI_PLAYER"></app-config>
+    </div>
+    <div *ngSwitchCase="KNIFFEL_GAME">
       <app-multi-player-game></app-multi-player-game>
     </div>
     <div *ngSwitchCase="RESULT">

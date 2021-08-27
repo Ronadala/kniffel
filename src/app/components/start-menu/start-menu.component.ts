@@ -16,10 +16,10 @@ export class StartMenuComponent implements OnInit {
   }
 
   clickedSinglePlayer() {
-    this.tabService.updateTab(GameTab.SINGLE_PLAYER);
+    this.tabService.updateTab(GameTab.SINGLE_PLAYER_CONFIG);
   }
 
   clickedMultiPlayer() {
-    this.tabService.updateTab(GameTab.MULTI_PLAYER);
+    this.tabService.updateTab(GameTab.MULTI_PLAYER_CONFIG);
   }
 }
