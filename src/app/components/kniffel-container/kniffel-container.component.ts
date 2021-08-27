@@ -4,11 +4,11 @@ import {TabManagerService} from "../../services/tab-manager.service";
 import {GameMode} from "../../enums/gameMode";
 
 @Component({
-  selector: 'app-kniffel',
-  templateUrl: './kniffel.component.html',
-  styleUrls: ['./kniffel.component.less']
+  selector: 'app-kniffel-container',
+  templateUrl: './kniffel-container.component.html',
+  styleUrls: ['./kniffel-container.component.less']
 })
-export class KniffelComponent implements OnInit {
+export class KniffelContainerComponent implements OnInit {
 
   readonly START_MENU = GameTab.START_MENU;
   readonly SINGLE_PLAYER_CONFIG = GameTab.SINGLE_PLAYER_CONFIG;

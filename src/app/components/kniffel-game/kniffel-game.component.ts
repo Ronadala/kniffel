@@ -8,11 +8,11 @@ import {DiceService} from "../../services/dice.service";
 import {ConfigurationService} from "../../services/configuration.service";
 
 @Component({
-  selector: 'app-multi-player-game',
-  templateUrl: './multi-player-game.component.html',
-  styleUrls: ['./multi-player-game.component.less']
+  selector: 'app-kniffel-game',
+  templateUrl: './kniffel-game.component.html',
+  styleUrls: ['./kniffel-game.component.less']
 })
-export class MultiPlayerGameComponent implements OnInit {
+export class KniffelGameComponent implements OnInit {
 
   readonly categories = KniffelCategories;
   readonly pointCategories = PointCategories;
