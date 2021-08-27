@@ -21,9 +21,9 @@ export class DiceService {
     }
   }
 
-  public resetAndShuffleDice(dices: Dice []) {
+  public resetDice(dices: Dice []) {
     for (let dice of dices) {
-      dice.value = this.getRandomDice();
+      dice.value = 0;
       dice.holdBack = false;
     }
   }

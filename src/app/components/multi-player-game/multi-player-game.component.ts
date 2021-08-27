@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Player} from "../../classes/Player";
 import {KniffelCategories} from "../../enums/kniffelCategories";
-import {CategoryService} from "../../services/Category.service";
+import {CategoryService} from "../../services/category.service";
 import {PointCategories} from "../../enums/PointCategories";
 import {Dice} from "../../classes/Dice";
-import {DiceService} from "../../services/Dice.service";
+import {DiceService} from "../../services/dice.service";
 
 @Component({
   selector: 'app-multi-player-game',
@@ -122,7 +122,7 @@ export class MultiPlayerGameComponent implements OnInit {
   }
 
   private resetDice() {
-    this.diceService.resetAndShuffleDice(this.dices);
+    this.diceService.resetDice(this.dices);
     this.possibleRerolls = this.maxRerolls;
   }
 
