@@ -1,5 +1,5 @@
 export class Dice {
-  public value: number | undefined;
+  public value: number;
   public holdBack: boolean = false;
 
   constructor() {

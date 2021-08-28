@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import {KniffelCategories} from "../enums/kniffelCategories";
 import {categoryPoints} from "../enums/categoryPoints";
+import {PointCategories} from "../enums/PointCategories";
+import {Player} from "../classes/Player";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,7 @@ export class CategoryService {
   constructor() {
   }
 
-  getCalculatedValue(category: KniffelCategories, dices: number []): number {
+  static getCalculatedValue(category: KniffelCategories, dices: number []): number {
     switch (category) {
       default:
         return categoryPoints.NULL;
@@ -44,6 +46,8 @@ export class CategoryService {
 
     }
   }
+
+  // Dice-category calculation
 
   private static calculateSingleDigits(searchedForDice: number, dices: number[]): number {
     let value = 0;
@@ -107,7 +111,8 @@ export class CategoryService {
     return this.sumAllEyes(dices)
   }
 
-  //Helper Methods for the category calculation
+  // Helper Methods for the category calculation
+
   private static calculateXOfAKind(x: number, dices: number[]): number {
     for (let i = 1; i <= 6; i++) {
       let numberOfDices = this.countArrayForNumber(i, dices);
@@ -148,5 +153,65 @@ export class CategoryService {
       }
     }
     return true;
+  }
+
+  // Point-category calculation
+
+  static calculateUpperBlockSum(player: Player) {
+    return this.sumUpperBlock(player);
+  }
+
+  static calculateBonus(player: Player) {
+    return player.getCategoryPoints(PointCategories.UPPER_BLOCK_SUM) >= categoryPoints.BONUS_THRESHOLD ? categoryPoints.BONUS : categoryPoints.NULL;
+  }
+
+  static calculateTotalUpperBlockSum(player: Player) {
+    return this.sumTotalUpperBlock(player);
+  }
+
+  static calculateTotalLowerBlockSum(player: Player) {
+    return this.sumTotalLowerBlock(player);
+  }
+
+  static calculateTotalSum(player: Player) {
+    return this.sumTotal(player);
+  }
+
+  // Helper Methods for the Points calculation
+  private static sumUpperBlock(player: Player) {
+    let sum: number = 0;
+    sum += player.getCategoryValue(KniffelCategories.ONES) != null ? player.getCategoryValue(KniffelCategories.ONES) : 0;
+    sum += player.getCategoryValue(KniffelCategories.TWOS) != null ? player.getCategoryValue(KniffelCategories.TWOS) : 0;
+    sum += player.getCategoryValue(KniffelCategories.THREES) != null ? player.getCategoryValue(KniffelCategories.THREES) : 0;
+    sum += player.getCategoryValue(KniffelCategories.FOURS) != null ? player.getCategoryValue(KniffelCategories.FOURS) : 0;
+    sum += player.getCategoryValue(KniffelCategories.FIVES) != null ? player.getCategoryValue(KniffelCategories.FIVES) : 0;
+    sum += player.getCategoryValue(KniffelCategories.SIXES) != null ? player.getCategoryValue(KniffelCategories.SIXES) : 0;
+    return sum;
+  }
+
+  private static sumTotalLowerBlock(player: Player) {
+    let sum: number = 0;
+    sum += player.getCategoryValue(KniffelCategories.THREE_OF_A_KIND) != null ? player.getCategoryValue(KniffelCategories.THREE_OF_A_KIND) : 0;
+    sum += player.getCategoryValue(KniffelCategories.FOUR_OF_A_KIND) != null ? player.getCategoryValue(KniffelCategories.FOUR_OF_A_KIND) : 0;
+    sum += player.getCategoryValue(KniffelCategories.FULL_HOUSE) != null ? player.getCategoryValue(KniffelCategories.FULL_HOUSE) : 0;
+    sum += player.getCategoryValue(KniffelCategories.SMALL_STREET) != null ? player.getCategoryValue(KniffelCategories.SMALL_STREET) : 0;
+    sum += player.getCategoryValue(KniffelCategories.LARGE_STREET) != null ? player.getCategoryValue(KniffelCategories.LARGE_STREET) : 0;
+    sum += player.getCategoryValue(KniffelCategories.KNIFFEL) != null ? player.getCategoryValue(KniffelCategories.KNIFFEL) : 0;
+    sum += player.getCategoryValue(KniffelCategories.CHANCE) != null ? player.getCategoryValue(KniffelCategories.CHANCE) : 0;
+    return sum;
+  }
+
+  private static sumTotalUpperBlock(player: Player) {
+    let sum: number = 0;
+    sum += player.getCategoryPoints(PointCategories.UPPER_BLOCK_SUM);
+    sum += player.getCategoryPoints(PointCategories.BONUS);
+    return sum
+  }
+
+  private static sumTotal(player: Player) {
+    let sum: number = 0;
+    sum += player.getCategoryPoints(PointCategories.TOTAL_UPPER_BLOCK_SUM);
+    sum += player.getCategoryPoints(PointCategories.TOTAL_LOWER_BLOCK_SUM);
+    return sum
   }
 }

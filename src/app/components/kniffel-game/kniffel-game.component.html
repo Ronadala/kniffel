@@ -54,10 +54,16 @@
   </div>
   <div class="kniffel-dices">
     <div *ngFor="let dice of dices">
-      <img [src]="getDiceImg(dice.value)"
+      <img *ngIf="1 <= dice.value && dice.value <= 6"
+           [src]="getDiceImg(dice.value)"
            [ngClass]="dice.holdBack ? 'hold-dice':'dice'"
-           (click)="toggleHoldDice(dice)"/>
+           (click)="toggleHoldDice(dice)"
+           [alt]="'Würfel '+dice.value"/>
     </div>
-    <button (click)="rollDice()">{{'würfeln (' + possibleRerolls + ')'}}</button>
+    <button class="shuffle-button"
+            [disabled]="isShuffleAllowed()"
+            (click)="rollDice()">
+      {{'würfeln (' + possibleRerolls + ')'}}
+    </button>
   </div>
 </div>

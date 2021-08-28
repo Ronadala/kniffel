@@ -6,6 +6,7 @@ import {PointCategories} from "../../enums/PointCategories";
 import {Dice} from "../../classes/Dice";
 import {DiceService} from "../../services/dice.service";
 import {ConfigurationService} from "../../services/configuration.service";
+import {TabManagerService} from "../../services/tab-manager.service";
 
 @Component({
   selector: 'app-kniffel-game',
@@ -29,10 +30,11 @@ export class KniffelGameComponent implements OnInit {
   upperBlockPoints: PointCategories[] | undefined;
   lowerBlockPoints: PointCategories[] | undefined;
   dices: Dice[] = [];
+  gameOver: boolean = false;
 
-  constructor(protected categoryService: CategoryService,
-              protected diceService: DiceService,
-              protected configService: ConfigurationService,) {
+  constructor(protected diceService: DiceService,
+              protected configService: ConfigurationService,
+              protected tabService: TabManagerService,) {
   }
 
   ngOnInit(): void {
@@ -113,10 +115,8 @@ export class KniffelGameComponent implements OnInit {
   }
 
   rollDice() {
-    if (this.possibleRerolls > 0) {
-      this.diceService.shuffleDice(this.dices);
-      this.possibleRerolls--;
-    }
+    this.diceService.shuffleDice(this.dices);
+    this.possibleRerolls--;
   }
 
   private resetDice() {
@@ -127,11 +127,15 @@ export class KniffelGameComponent implements OnInit {
   selectCategory(player: Player, category: KniffelCategories) {
     player.setCategoryValue(category, this.calculateValue(category));
 
-    this.nextTurn();
+    if (player.isPlayerDone() && player.playerNumber === this.playerCount) {
+      this.gameOver = true;
+    } else {
+      this.nextTurn();
+    }
   }
 
   calculateValue(category: KniffelCategories): number {
-    return this.categoryService.getCalculatedValue(category, this.getDices());
+    return CategoryService.getCalculatedValue(category, this.getDices());
   }
 
 
@@ -157,5 +161,9 @@ export class KniffelGameComponent implements OnInit {
 
   toggleHoldDice(dice: Dice) {
     dice.holdBack = !dice.holdBack;
+  }
+
+  isShuffleAllowed() {
+    return this.possibleRerolls <= 0 && this.gameOver;
   }
 }
