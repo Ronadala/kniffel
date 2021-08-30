@@ -58,11 +58,6 @@ export class Player {
   }
 
   isPlayerDone(): boolean {
-    for (let value of this.values) {
-      if (value === null) {
-        return false;
-      }
-    }
-    return true;
+    return this.values.size >= 13;
   }
 }

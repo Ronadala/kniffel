@@ -100,13 +100,15 @@ export class KniffelGameComponent implements OnInit {
   }
 
   nextTurn() {
-    this.getPlayer(this.playerTurn).activeTurn = false;
+    if (this.playerCount > 1) {
+      this.getPlayer(this.playerTurn).activeTurn = false;
 
-    if (this.playerTurn! >= this.playerCount!) {
-      // back to player 1
-      this.playerTurn = 1;
-    } else {
-      this.playerTurn++;
+      if (this.playerTurn! >= this.playerCount!) {
+        // back to player 1
+        this.playerTurn = 1;
+      } else {
+        this.playerTurn++;
+      }
     }
 
     this.resetDice();
@@ -137,7 +139,6 @@ export class KniffelGameComponent implements OnInit {
   calculateValue(category: KniffelCategories): number {
     return CategoryService.getCalculatedValue(category, this.getDices());
   }
-
 
   getPlayer(index: number): Player {
     const player: Player = <Player>this.playerList.find(value => {
