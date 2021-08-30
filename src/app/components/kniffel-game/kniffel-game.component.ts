@@ -100,8 +100,8 @@ export class KniffelGameComponent implements OnInit {
   }
 
   nextTurn() {
+    this.getPlayer(this.playerTurn).activeTurn = false;
     if (this.playerCount > 1) {
-      this.getPlayer(this.playerTurn).activeTurn = false;
 
       if (this.playerTurn! >= this.playerCount!) {
         // back to player 1
@@ -164,7 +164,7 @@ export class KniffelGameComponent implements OnInit {
     dice.holdBack = !dice.holdBack;
   }
 
-  isShuffleAllowed() {
-    return this.possibleRerolls <= 0 && this.gameOver;
+  isShuffleDeactivated() {
+    return this.possibleRerolls <= 0 || this.gameOver;
   }
 }

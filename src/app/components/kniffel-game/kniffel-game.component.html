@@ -61,7 +61,7 @@
            [alt]="'Würfel '+dice.value"/>
     </div>
     <button class="shuffle-button"
-            [disabled]="isShuffleAllowed()"
+            [disabled]="isShuffleDeactivated()"
             (click)="rollDice()">
       {{'würfeln (' + possibleRerolls + ')'}}
     </button>
