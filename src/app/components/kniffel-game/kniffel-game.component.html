@@ -8,14 +8,15 @@
       <!-- UpperBlock -->
       <tr *ngFor="let category of upperBlock">
         <td class="value-Category">{{category}}</td>
-        <td *ngFor="let player of playerList" class="value">
+        <td *ngFor="let player of playerList" class="value"
+            (click)="(player.activeTurn && player.getCategoryValue(category) == null)
+            && selectCategory(player, category)">
           <div *ngIf="player.getCategoryValue(category) != null"
-                class="selected-Value">
+               class="selected-Value">
             {{player.getCategoryValue(category)}}
           </div>
           <div *ngIf="player.activeTurn && player.getCategoryValue(category) == null"
-                (click)="selectCategory(player, category)"
-                class="selectable-Value">
+               class="selectable-Value">
             {{calculateValue(category)}}
           </div>
         </td>
@@ -24,21 +25,22 @@
       <tr *ngFor="let category of upperBlockPoints">
         <td class="point-Category">{{category}}</td>
         <td *ngFor="let player of playerList" class="points">
-          <span>{{player.getCategoryPoints(category)}}</span>
+          <div class="points-value">{{player.getCategoryPoints(category)}}</div>
         </td>
       </tr>
 
       <!-- LowerBlock -->
       <tr *ngFor="let category of lowerBlock">
         <td class="value-Category">{{category}}</td>
-        <td *ngFor="let player of playerList" class="value">
+        <td *ngFor="let player of playerList" class="value"
+            (click)="(player.activeTurn && player.getCategoryValue(category) == null)
+            && selectCategory(player, category)">
           <div *ngIf="player.getCategoryValue(category) != null"
-                class="selected-Value">
+               class="selected-Value">
             {{player.getCategoryValue(category)}}
           </div>
           <div *ngIf="player.activeTurn && player.getCategoryValue(category) == null"
-                (click)="selectCategory(player, category)"
-                class="selectable-Value">
+               class="selectable-Value">
             {{calculateValue(category)}}
           </div>
         </td>
@@ -47,7 +49,7 @@
       <tr *ngFor="let category of lowerBlockPoints">
         <td class="point-Category">{{category}}</td>
         <td *ngFor="let player of playerList" class="points">
-          <span>{{player.getCategoryPoints(category)}}</span>
+          <div>{{player.getCategoryPoints(category)}}</div>
         </td>
       </tr>
     </table>
