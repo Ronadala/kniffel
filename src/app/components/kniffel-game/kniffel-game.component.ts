@@ -7,6 +7,7 @@ import {Dice} from "../../classes/Dice";
 import {DiceService} from "../../services/dice.service";
 import {ConfigurationService} from "../../services/configuration.service";
 import {TabManagerService} from "../../services/tab-manager.service";
+import {KniffelGameHelperService} from "../../services/kniffel-game-helper.service";
 
 @Component({
   selector: 'app-kniffel-game',
@@ -31,10 +32,12 @@ export class KniffelGameComponent implements OnInit {
   lowerBlockPoints: PointCategories[] | undefined;
   dices: Dice[] = [];
   gameOver: boolean = false;
+  activeAbilities: boolean = false;
 
   constructor(protected diceService: DiceService,
               protected configService: ConfigurationService,
-              protected tabService: TabManagerService,) {
+              protected tabService: TabManagerService,
+              protected kniffelHelper: KniffelGameHelperService,) {
   }
 
   ngOnInit(): void {
@@ -48,39 +51,17 @@ export class KniffelGameComponent implements OnInit {
 
   private loadConfig() {
     this.playerList = this.configService.getPlayerList();
+    this.activeAbilities = this.configService.getAbilities();
   }
 
   private createBlocks() {
-    this.upperBlock = [
-      this.categories.ONES,
-      this.categories.TWOS,
-      this.categories.THREES,
-      this.categories.FOURS,
-      this.categories.FIVES,
-      this.categories.SIXES,
-    ];
+    this.upperBlock = this.kniffelHelper.getUpperBlocks();
 
-    this.lowerBlock = [
-      this.categories.THREE_OF_A_KIND,
-      this.categories.FOUR_OF_A_KIND,
-      this.categories.FULL_HOUSE,
-      this.categories.SMALL_STREET,
-      this.categories.LARGE_STREET,
-      this.categories.KNIFFEL,
-      this.categories.CHANCE,
-    ];
+    this.lowerBlock = this.kniffelHelper.getLowerBlock();
 
-    this.upperBlockPoints = [
-      this.pointCategories.UPPER_BLOCK_SUM,
-      this.pointCategories.BONUS,
-      this.pointCategories.TOTAL_UPPER_BLOCK_SUM,
-    ];
+    this.upperBlockPoints = this.kniffelHelper.getUpperBlockPoints();
 
-    this.lowerBlockPoints = [
-      this.pointCategories.TOTAL_LOWER_BLOCK_SUM,
-      this.pointCategories.TOTAL_UPPER_BLOCK_SUM,
-      this.pointCategories.TOTAL_SUM,
-    ];
+    this.lowerBlockPoints = this.kniffelHelper.getLowerBlockPoints(this.activeAbilities);
 
   }
 
@@ -166,5 +147,10 @@ export class KniffelGameComponent implements OnInit {
 
   isShuffleDeactivated() {
     return this.possibleRerolls <= 0 || this.gameOver;
+  }
+
+  extraRoll() {
+    this.getPlayer(this.playerTurn).updateAbilityPoints(-5);
+    this.possibleRerolls++;
   }
 }

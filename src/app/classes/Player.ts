@@ -57,6 +57,13 @@ export class Player {
     this.points.set(PointCategories.TOTAL_SUM, CategoryService.calculateTotalSum(this));
   }
 
+  public updateAbilityPoints(modifier: number) {
+    let previousAbilityPoints = this.points.get(PointCategories.ABILITY_POINTS);
+    previousAbilityPoints = !!previousAbilityPoints ? previousAbilityPoints : 0;
+    const newAbilityPoints = previousAbilityPoints + modifier;
+    this.points.set(PointCategories.ABILITY_POINTS, newAbilityPoints)
+  }
+
   isPlayerDone(): boolean {
     return this.values.size >= 13;
   }

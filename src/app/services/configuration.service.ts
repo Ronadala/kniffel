@@ -7,6 +7,7 @@ import {Player} from "../classes/Player";
 export class ConfigurationService {
 
   playerList: Player[] = [];
+  aktivAbilities: boolean = false;
 
   constructor() {
   }
@@ -17,5 +18,13 @@ export class ConfigurationService {
 
   public getPlayerList(): Player[] {
     return this.playerList;
+  }
+
+  setAbilities(activateAbilities: boolean) {
+    this.aktivAbilities = activateAbilities;
+  }
+
+  getAbilities(): boolean {
+    return this.aktivAbilities;
   }
 }

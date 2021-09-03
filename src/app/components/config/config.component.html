@@ -9,6 +9,15 @@
       Entfernen
     </button>
   </div>
+  <div class="extra-settings">
+    <label>
+      activate abilities
+    <input
+      type="checkbox"
+      [checked]="activateAbilities"
+      (change)="activateAbilities = !activateAbilities"/>
+    </label>
+  </div>
   <div class="button-container">
     <button *ngIf="isPlayerAddAllowed()"
             [disabled]="playerList.length >= 8"

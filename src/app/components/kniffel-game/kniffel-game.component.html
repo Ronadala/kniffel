@@ -68,4 +68,10 @@
       {{'würfeln (' + possibleRerolls + ')'}}
     </button>
   </div>
+  <div *ngIf="activeAbilities"
+       class="kniffel-extra-buttons">
+    <button (click)="extraRoll()">
+      {{'extra würfeln'}}
+    </button>
+  </div>
 </div>

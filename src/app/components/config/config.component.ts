@@ -16,6 +16,7 @@ export class ConfigComponent {
 
   playerList: Player[] = [new Player()];
   private playerNumberCounter: number = 1;
+  activateAbilities: boolean = false;
 
   constructor(
     protected tabService: TabManagerService,
@@ -46,6 +47,7 @@ export class ConfigComponent {
     this.setPlayerNumbers();
 
     this.configService.setPlayer(this.playerList);
+    this.configService.setAbilities(this.activateAbilities);
 
     this.navigateToGame();
   }

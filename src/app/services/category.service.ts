@@ -212,6 +212,9 @@ export class CategoryService {
     let sum: number = 0;
     sum += player.getCategoryPoints(PointCategories.TOTAL_UPPER_BLOCK_SUM);
     sum += player.getCategoryPoints(PointCategories.TOTAL_LOWER_BLOCK_SUM);
+    sum += isNaN(player.getCategoryPoints(PointCategories.ABILITY_POINTS))
+      ? categoryPoints.NULL
+      : player.getCategoryPoints(PointCategories.ABILITY_POINTS);
     return sum
   }
 }
